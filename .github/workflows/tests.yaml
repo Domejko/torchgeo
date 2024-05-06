@@ -54,7 +54,10 @@ jobs:
         run: pip list
       - name: Run pytest checks
         run: |
-          pytest --cov=torchgeo --cov-report=xml --durations=10 -n auto
+          if [ "${{ runner.os }}" != "Windows" ]; then
+            pytest --cov=torchgeo --cov-report=xml --durations=10 -n auto
+          else
+            pytest --cov=torchgeo --cov-report=xml --durations=10
           python3 -m torchgeo --help
       - name: Report coverage
         uses: codecov/codecov-action@v4.3.0
